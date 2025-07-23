@@ -1,27 +1,37 @@
-name: Generate Graph  
-on: [push]  
-  
-jobs:  
- build:  
-   runs-on: ubuntu-latest  
-   steps:  
-   - uses: actions/checkout@v4  
-  
-   - name: Setup Node.js  
-     uses: actions/setup-node@v4  
-     with:  
-       node-version: '20'  
-  
-   - name: Install dependencies  
-     run: npm install remark unist-util-visit  
-  
-   - name: Generate graph data  
-     run: node scripts/generate-graph.js  
-  
-   - name: Commit changes  
-     run: |  
-       git config user.name "GitHub Bot"  
-       git config user.email "bot@noreply.github.com"  
-       git add docs/graph.json  
-       git commit -m "Update graph data" || echo "No changes to commit"  
-       git push  
+name: Generate Knowledge Graph
+
+on:
+  push:
+    paths:
+      - 'docs/notes/**/*.md'
+      - 'scripts/generate-graph.js'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install remark unist-util-visit
+
+      - name: Generate Graph
+        run: node scripts/generate-graph.js
+
+      - name: Commit and Push graph.json
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs/graph.json
+          git diff --cached --quiet || git commit -m "Auto-generate graph.json"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
