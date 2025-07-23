@@ -1,0 +1,11 @@
+{
+  "nodes": [
+    { "data": { "id": "doc1.md", "label": "Intro", "path": "notes/doc1.md" } },
+    { "data": { "id": "doc2.md", "label": "Agents", "path": "notes/doc2.md" } },
+    { "data": { "id": "doc3.md", "label": "Flow", "path": "notes/doc3.md" } }
+  ],
+  "edges": [
+    { "data": { "source": "doc1.md", "target": "doc2.md" } },
+    { "data": { "source": "doc2.md", "target": "doc3.md" } }
+  ]
+}
