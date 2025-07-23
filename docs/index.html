@@ -1,0 +1,39 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+<title>Knowledge Graph</title>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.23.0/cytoscape.min.js"></script>  
+<style>  
+       #cy {  
+           width: 100%;  
+           height: 100vh;  
+           position: absolute;  
+           top: 0;  
+           left: 0;  
+       }  
+</style>  
+</head>  
+<body>  
+<div id="cy"></div>  
+<script>  
+       fetch('graph.json')  
+           .then(r => r.json())  
+           .then(data => {  
+               cytoscape({  
+                   container: document.getElementById('cy'),  
+                   elements: data,  
+                   style: [{  
+                       selector: 'node',  
+                       style: {  
+                           'label': 'data(label)',  
+                           'background-color': '#6FB1FC'  
+                       }  
+                   }],  
+                   layout: { name: 'cose' }  
+               }).on('tap', 'node', evt => {  
+                   window.open(evt.target.data('path'), '_blank');  
+               });  
+           });  
+</script>  
+</body>  
+</html>  
