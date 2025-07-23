@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    {
+      "data": {
+        "id": "agents-workflow.md",
+        "label": "agents-workflow",
+        "path": "notes/agents-workflow.md"
+      }
+    },
+    {
+      "data": {
+        "id": "flow-of-agents.md",
+        "label": "flow-of-agents",
+        "path": "notes/flow-of-agents.md"
+      }
+    },
+    {
+      "data": {
+        "id": "Test Case Generator.md",
+        "label": "Test Case Generator",
+        "path": "notes/Test Case Generator.md"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "source": "agents-workflow.md",
+        "target": "Test%20Case%20Generator.md"
+      }
+    },
+    {
+      "data": {
+        "source": "flow-of-agents.md",
+        "target": "Test%20Case%20Generator.md"
+      }
+    }
+  ]
+}
