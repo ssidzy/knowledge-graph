@@ -1,5 +1,3 @@
-
-
 ### **Agent Teams and Agent Roles**
 
 * **Agent Team: Test Case Generation Team**
@@ -37,4 +35,3 @@
     * Knowledge Source: No explicit knowledge base but may use a rule set for optimization.
     * Example Query: "Optimize the following test case set for login functionality."
 
----
