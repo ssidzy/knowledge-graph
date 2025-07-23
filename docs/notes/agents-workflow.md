@@ -1,6 +1,3 @@
-
-
-
 1. **Input Stage:**
 
    * User provides a user story, feature title, or a brief requirement description.
