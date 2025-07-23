@@ -9,7 +9,6 @@ const outputFile = path.join(__dirname, '../docs/graph.json');
 const nodes = [];
 const edges = [];
 
-// Process all markdown files
 fs.readdirSync(notesDir).forEach(file => {
   if (!file.endsWith('.md')) return;
 
@@ -17,37 +16,34 @@ fs.readdirSync(notesDir).forEach(file => {
   const content = fs.readFileSync(filePath, 'utf8');
   const ast = remark().parse(content);
 
-  // Extract title (first H1 or fallback to filename)
   let title = path.basename(file, '.md');
   visit(ast, 'heading', (node) => {
-    if (node.depth === 1 && node.children && node.children.length > 0) {
+    if (node.depth === 1 && node.children?.[0]?.value) {
       title = node.children[0].value;
     }
   });
 
-  // Add node
+  const encodedId = encodeURIComponent(file);  // ✅ Important fix
   nodes.push({
-    id: file,
+    id: encodedId,
     label: title,
     path: `notes/${file}`
   });
 
-  // Extract links to other .md files
   visit(ast, 'link', (node) => {
     if (node.url.endsWith('.md')) {
-      const targetFile = path.basename(node.url); // Ensure it's just the filename
+      const target = encodeURIComponent(path.basename(node.url)); // ✅ encode this too
       edges.push({
-        source: file,
-        target: targetFile
+        source: encodedId,
+        target: target
       });
     }
   });
 });
 
-// Save graph data
 fs.writeFileSync(outputFile, JSON.stringify({
   nodes: nodes.map(n => ({ data: n })),
   edges: edges.map(e => ({ data: e }))
 }, null, 2));
 
-console.log(`✅ Generated graph with ${nodes.length} nodes and ${edges.length} edges`);
+console.log(`✅ Final graph generated with ${nodes.length} nodes and ${edges.length} edges`);
